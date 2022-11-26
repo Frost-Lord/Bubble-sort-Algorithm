@@ -72,6 +72,10 @@ function App() {
     setArray(generateRandomArray());
   }, []);
 
+  const clear = async () => {
+    setArray(generateRandomArray());
+  }
+
 
   const unsorted = array.map((item) => (
     <div
@@ -88,8 +92,8 @@ function App() {
 
         <div className="topnav">
           <button onClick={() => bblsort()}>Start</button>
-          <button onClick={bblsort}>Stop Sort</button>
-          <button onClick={bblsort}>Restart/re-gen</button>
+          <button onClick={() => clear()}>Stop Sort</button>
+          <button onClick={() => clear()}>Restart/re-gen</button>
         </div>
 
 
