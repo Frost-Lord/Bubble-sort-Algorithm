@@ -38,10 +38,9 @@
 .sortingBars {
   position: absolute;
   top: 5%;
-  left: 20%;
-  transform: rotate(+90deg);
+  left: 10%;
+  transform: rotate(+270deg);
 }
-
 
 .bars {
   width: 30px;
@@ -49,17 +48,11 @@
   margin-left: 4px;
   display: inline-block;
   border-radius: 10px;
+  font-size: 18px;
+  z-index: 1;
 }
 
 .data {
   position: absolute;
   top: 50%;
-}
-
-.selecteda {
-  background-color: #15ff00;
-}
-
-.selectedb {
-  background-color: #ff0000;
 }

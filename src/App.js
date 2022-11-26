@@ -34,6 +34,8 @@ function App() {
             setArray([...array, currentArray])
             
 
+            console.log("sorting")
+
             let bar1 = document.getElementById(i).style
             let bar2 = document.getElementById(j).style
 
@@ -77,7 +79,7 @@ function App() {
       id={item.id}
       key={item.value}
       style={{ height: item.value }}
-    ></div>
+    >{item.value}</div>
   ));
 
   return (
