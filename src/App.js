@@ -1,74 +1,100 @@
 import './App.css';
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [array, setArray] = useState([]);
 
-  async function bblsort(arr) {
-    var i, j, temp;
-    for (i = 0; i < arr.length; i++) {
-      for (j = 0; j < (arr.length - i - 1); j++) {
-        if (arr[j] > arr[j + 1]) {
-          temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
+  let sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
+  const finishedAnimation = async () => {
+    for (let i = 0; i < array.length; i++) {
+      let bar = document.getElementById(i).style
+      bar.backgroundColor = 'green'
+      await sleep(50)
+    }
+  }
+
+  const bblsort = async () => {
+    let currentArray = array;
+    let sorted = false
+
+    while (!sorted) {
+      sorted = true
+
+      for (let i = 0; i < currentArray.length - 1; i++) {
+        for (let j = 0; j < currentArray.length - i - 1; j++) {
+          if (currentArray[j].value > currentArray[j + 1].value) {
+
+            let temp = currentArray[j]
+            currentArray[j] = currentArray[j + 1]
+            currentArray[j + 1] = temp
+
+            setArray([...array, currentArray])
+            
+
+            let bar1 = document.getElementById(i).style
+            let bar2 = document.getElementById(j).style
+
+
+            bar1.backgroundColor = 'red'
+            bar2.backgroundColor = 'green'
+
+            await sleep(50)
+
+            bar1.backgroundColor = '#FF7F50'
+            bar2.backgroundColor = '#FF7F50'
+
+            sorted = false;
+          }
+
         }
       }
     }
-    console.log(arr);
+    if (sorted) {
+      finishedAnimation()
+    }
+
   }
 
   function generateRandomArray() {
     var arr = [];
-    var size = Math.floor(Math.random() * 30) + 10;
-    for (var i = 0; i < size; i++) {
-      arr.push(Math.floor(Math.random() * 1000) + 1);
+    for (var i = 0; i < 20; i++) {
+      arr.push({ id: i, value: Math.floor(Math.random() * 1000) + 1 });
     }
     return arr;
   }
 
-
-  var arr = generateRandomArray();
-
-  const UnSortedArray = arr.map((number) =>
-      <li>{number}</li>
-   );
-
-  bblsort(arr);
-
-   const SortedArray = arr.map((number) =>
-   <li>{number}</li>
- );
+  useEffect(() => {
+    setArray(generateRandomArray());
+  }, []);
 
 
-
-
+  const unsorted = array.map((item) => (
+    <div
+      className='bars'
+      id={item.id}
+      key={item.value}
+      style={{ height: item.value }}
+    ></div>
+  ));
 
   return (
     <div className="App">
       <header className="App-header">
 
         <div className="topnav">
-          <button onClick={bblsort}>Start</button>
+          <button onClick={() => bblsort()}>Start</button>
           <button onClick={bblsort}>Stop Sort</button>
           <button onClick={bblsort}>Restart/re-gen</button>
         </div>
 
-        <div className='main-div'>
-      <div className='bg-dark text-light text-center'>
-        <h1 className='display-3 text-light my-3'>Unsorted Array</h1>
-        <ul>
-          {UnSortedArray}
-        </ul>
-      </div>
-      <div className='bg-primary text-light text-center'>
-        <h1 className='display-3 text-light my-3'>Sorted Array Using Bubble Sort</h1>
-        <ul>
-          {SortedArray}
-        </ul>
-      </div>
 
+        <div className='sortingBars'>
+          {unsorted}
+        </div>
 
-    </div>
 
 
 
